@@ -62,9 +62,9 @@ class FontSettings extends React.Component {
                 </Button>
                 <Collapse in={this.state.open}>
                     <form id="fontSettingsList">
-                        {/* <FontFamilies value={this.state.value}
+                        <FontFamilies value={this.state.value}
                             onChangeValue={this.handleChangeValue} 
-                            parentCallback = {this.handleCallback}/> */}
+                            parentCallback = {this.handleCallback}/> 
                         <FontFamilies parentCallback = {this.handleCallbackOne} />
                         <FontSize parentCallback = {this.handleCallbackTwo} />
                         <LineSpace parentCallback = {this.handleCallbackThree} />

@@ -2,10 +2,14 @@ from sys import argv, exit, stderr
 from routes import app
 import web_interface
 import multiprocessing
-from multiprocessing import Process
+from multiprocessing import Process, Queue
 import workers
+import socket
+import sys
+import time
+import appscript
+import threading
 
-finished = None
 def main():
     global finished
     if len(argv) != 3:
@@ -21,21 +25,16 @@ def main():
 
     try:
         finished = 1
-        app.run(host='0.0.0.0', port=port, debug=True)
+        app.run(host='127.0.0.1', port=port, debug=True, threaded=False, processes=2, use_reloader=False)
     except Exception as ex:
         print(ex, file=stderr)
         exit(1)
 
 if __name__ == '__main__':
-    proc1 = multiprocessing.Process(target=main)
+    proc1 = threading.Thread(target=main)
     proc1.start()
+    url = appscript.app('Google Chrome').windows.tabs.URL()
     mySelenium = web_interface.selenium()
-    myUID = mySelenium.connectSelenium('https://docs.google.com/document/d/1c2EB7UQkKFClWztXksJH8tMS1RW79UgpFre-s19NJIE/edit')
-    proc2 = multiprocessing.Process(target=workers.worker1, args=[mySelenium, myUID])
+    myUID = mySelenium.connectSelenium(url)
+    proc2 = threading.Thread(target=workers.worker1, args=[mySelenium, myUID])
     proc2.start()
-    # proc1.join()
-    # print("is process 1 alive? ", proc1.is_alive() == True)
-    # while proc1.is_alive() == True:
-    # proc2.join()
-    # proc3.join()
-    # mySelenium.closeSelenium(myDriver)

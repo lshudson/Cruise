@@ -3,20 +3,17 @@ from flask import Flask, render_template
 from flask import Response, render_template, url_for, flash, redirect, request, jsonify, make_response
 from flask_cors import CORS 
 from crypt import methods
-import sys
 import json
-# sys.path.insert(0, '/Users/leilahudson/Documents/GitHub/Startup/Cruise/backend')
 import multiprocessing
 from multiprocessing import Manager
 import keyboard_features
 import min_time_ml
 import roadblock_ml
-import web_interface
-import workers
 
 app = Flask(__name__) 
 CORS(app)
 
+"""
 def keyboard_process():
   proc1 = multiprocessing.Process(target=worker1)
   proc1.start() 
@@ -29,7 +26,6 @@ def worker1(keyboard1, namespace):
         namespace.keyboard = keyboard1.realtime(keyboard1.text) 
         print(namespace.keyboard)
         
-"""
 @app.route("/api/selenium/", methods=["GET","POST"])
 def getSelenium():
     mgr = Manager()
@@ -67,20 +63,6 @@ def getURL():
         return 'Content-Type not supported!'
 
 """
-@app.route("/api/thresholds/", methods=["GET","POST"])
-def getThresholds():
-    content_type = request.headers.get('Content-Type')
-    if (content_type == 'application/json'):
-        json = request.json
-        wordThreshold = json['wordThr']
-        pageThreshold = json['pageThr']
-        publication_buffer=open("thr.buf", 'w')
-        publication_buffer.write([wordThreshold, pageThreshold])
-        return jsonify(json), 201
-    else:
-        return 'Content-Type not supported!'
-"""
-
 @app.route("/api/fonts/", methods=["GET","POST"])
 def getFonts():
     content_type = request.headers.get('Content-Type')
@@ -89,13 +71,13 @@ def getFonts():
         fontFamily = json['FontFamily']
         fontSize = json['FontSize']
         lineSpacing = json['LineSpace']
-        print("hi")
         print(json)
         publication_buffer=open("font.buf", 'w')
         publication_buffer.write(fontFamily + "\n" + fontSize + "\n" + lineSpacing)
         return jsonify(json), 201
     else:
         return 'Content-Type not supported!'
+"""
 
 @app.route("/api/thr/", methods=["GET","POST"])
 def getThresholds():
@@ -114,7 +96,6 @@ def getThresholds():
 
 @app.route("/api/time/", methods=["GET","POST"])
 def getTime():
-    print("hi")
     content_type = request.headers.get('Content-Type')
     if (content_type == 'application/json'):
         json = request.json
@@ -133,4 +114,4 @@ def getML():
     # return jsonify({"prediction":prediction_result[0]}), 201
 
 if __name__ == "__main__":
-    app.run(port=3000, debug=True)
+    app.run(port=3001, debug=True)

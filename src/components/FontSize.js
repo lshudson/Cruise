@@ -21,18 +21,19 @@ class FontSize extends React.Component {
                     max="400"
                     onChange={this.getInputValue}
                 />
-                {/* <input type="number" id="tentacles" name="tentacles"
-                    min="1" max="400" step={1} onChange={this.getInputValue}></input> */}
-                {/* <NumericInput className="form-control"
+                <input type="number" id="tentacles" name="tentacles"
+                    min="1" max="400" step={1} onChange={this.getInputValue}></input>
+                <NumericInput className="form-control"
                     value={12}
                     min={0}
                     max={400}
                     step={1}
                     precision={0}
-                    onChange={this.getInputValue} /> */}
+                    onChange={this.getInputValue} />
             </div>
 
         )
     }
-}
+} 
+
 export default FontSize
